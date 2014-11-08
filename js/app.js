@@ -25,12 +25,11 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-
-    if ( this.x < 300) {
-      this.x = (this.x + 1);
+    if (this.x < 500) {
+      this.x = (this.x + 2);
     }
     else {
-      this.x = (this.x - 1) * dt;
+      this.x = -50;
     }
     //Render is done in Engine.js
 };
