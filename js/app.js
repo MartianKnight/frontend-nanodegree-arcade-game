@@ -68,6 +68,7 @@ Player.prototype.handleInput = function(keys) {
     console.log(keys);
     console.log("Before" + this.x + "  " + this.y);
 
+    // Change the amount of move
     var move = 15 * 6;
 
     if (keys == "left") {
@@ -81,6 +82,9 @@ Player.prototype.handleInput = function(keys) {
     }
     else if (keys == "down") {
       this.y = this.y + move;
+    }
+    else {
+      console.log("Incorrect Movement Key")
     }
     console.log("After " + this.x + "  " + this.y);
 };
