@@ -56,8 +56,10 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = 200;
+    this.x = 205;
     this.y = 400;
+    this.moveX = 101;
+    this.moveY = 85;
 
 };
 
@@ -79,19 +81,18 @@ Player.prototype.handleInput = function(keys) {
     console.log("Before" + this.x + "  " + this.y);
 
     // Change the amount of move
-    var move = 15 * 6;
 
     if (keys == "left") {
-      this.x = this.x - move;
+      this.x = this.x - this.moveX;
     }
     else if (keys == "right") {
-      this.x = this.x + move;
+      this.x = this.x + this.moveX;
     }
     else if (keys == "up") {
-      this.y = this.y - move;
+      this.y = this.y - this.moveY;
     }
     else if (keys == "down") {
-      this.y = this.y + move;
+      this.y = this.y + this.moveY;
     }
     else {
       console.log("Incorrect Movement Key");
