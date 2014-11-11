@@ -33,6 +33,10 @@ var Engine = (function(global) {
         // checkCollisions();
     }
 
+    function checkCollision() {
+        // Unsure what to do here
+    }
+
     function updateEntities(dt) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
@@ -69,7 +73,10 @@ var Engine = (function(global) {
         player.render();
     }
 
+    // When you die you reset the game
     function reset() {
+        // Only should reset the player
+        // Maybe add a pop up
         // noop
     }
 
