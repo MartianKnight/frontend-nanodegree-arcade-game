@@ -27,6 +27,8 @@ var Enemy = function() {
     var negLaneStartX = Math.abs(ranNumLaneX) * -1;
     this.x = negLaneStartX;
 
+    // Add enemy speed
+
 };
 
 // Update the enemy's position, required method for game
