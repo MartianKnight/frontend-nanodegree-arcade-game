@@ -15,8 +15,18 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 120;
-    this.y = 200;
+
+    // Randomly place bug on the three column lanes
+    var ranNumLaneY = Math.floor(Math.random() * 4);
+    console.log(ranNumLaneY);
+    this.y = 55 + (80 * (ranNumLaneY - 1));
+
+    // Randomly start bug on the row
+    var ranNumLaneX = Math.floor(Math.random() * 201) + 100;
+    console.log(ranNumLaneX);
+    var negLaneStartX = Math.abs(ranNumLaneX) * -1;
+    this.x = negLaneStartX;
+
 };
 
 // Update the enemy's position, required method for game
@@ -45,7 +55,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    this.sprite = 'images/char-boy.png'
+    this.sprite = 'images/char-boy.png';
     this.x = 200;
     this.y = 400;
 
@@ -84,23 +94,17 @@ Player.prototype.handleInput = function(keys) {
       this.y = this.y + move;
     }
     else {
-      console.log("Incorrect Movement Key")
+      console.log("Incorrect Movement Key");
     }
     console.log("After " + this.x + "  " + this.y);
 };
 
 // Now instantiate your objects.
+
 var enemy01 = new Enemy();
-enemy01.x = 10;
-enemy01.y = 215;
-
 var enemy02 = new Enemy();
-enemy02.x = -250;
-enemy02.y = 135;
-
 var enemy03 = new Enemy();
-enemy03.x = -100;
-enemy03.y = 55;
+
 
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
