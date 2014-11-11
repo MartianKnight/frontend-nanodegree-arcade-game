@@ -71,6 +71,11 @@ var Player = function() {
 Player.prototype.update = function() {
     //
     //this.x = this.x + 5;
+
+    // When they hit the water the game should be over
+    if (this.y < 0) {
+      this.y = 400;
+    }
 };
 
 Player.prototype.render = function() {
@@ -82,15 +87,33 @@ Player.prototype.handleInput = function(keys) {
     console.log(keys);
     console.log("Before" + this.x + "  " + this.y);
 
-    // Change the amount of move
+    // Check if player has left the board
+    function validMoveX(test) {
+
+      var newX = test;
+      if (newX < 50) {
+        return 0;
+      }
+      else if (newX > 500) {
+        return 407;
+      }
+      else {
+        return newX;
+      }
+    }
+
+
 
     if (keys == "left") {
-      this.x = this.x - this.moveX;
+      this.x = validMoveX(this.x - this.moveX);
     }
     else if (keys == "right") {
-      this.x = this.x + this.moveX;
+      this.x = validMoveX(this.x + this.moveX);
     }
-    else if (keys == "up") {
+
+
+
+    if (keys == "up") {
       this.y = this.y - this.moveY;
     }
     else if (keys == "down") {
