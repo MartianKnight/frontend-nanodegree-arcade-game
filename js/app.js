@@ -112,7 +112,7 @@ Player.prototype.handleInput = function(keys) {
     }
 
 
-
+    //Valid Y move
     if (keys == "up") {
       this.y = this.y - this.moveY;
     }
@@ -127,6 +127,7 @@ Player.prototype.handleInput = function(keys) {
 
 // Now instantiate your objects.
 
+// Add two more enemies
 var enemy01 = new Enemy();
 var enemy02 = new Enemy();
 var enemy03 = new Enemy();
