@@ -58,7 +58,7 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = 205;
+    this.x = 202;
     this.y = 400;
     this.moveX = 101;
     this.moveY = 85;
@@ -88,36 +88,49 @@ Player.prototype.handleInput = function(keys) {
     console.log("Before" + this.x + "  " + this.y);
 
     // Check if player has left the board
-    function validMoveX(test) {
-
-      var newX = test;
+    function validMoveX(move) {
+      var newX = move;
       if (newX < 50) {
         return 0;
       }
       else if (newX > 500) {
-        return 407;
+        return 404;
       }
       else {
         return newX;
       }
     }
 
+    function validMoveY(move) {
+      var newY = move;
+      if (newY < 50) {
+        return 400;
+      }
+      else if (newY > 450) {
+        console.log("You Win");
+        return 400;
+      }
+      else {
+        return newY;
+      }
+    }
 
-
+    //Valid X move
     if (keys == "left") {
       this.x = validMoveX(this.x - this.moveX);
     }
     else if (keys == "right") {
       this.x = validMoveX(this.x + this.moveX);
+      console.log(this.x);
     }
 
 
     //Valid Y move
     if (keys == "up") {
-      this.y = this.y - this.moveY;
+      this.y = validMoveY(this.y - this.moveY);
     }
     else if (keys == "down") {
-      this.y = this.y + this.moveY;
+      this.y = validMoveY(this.y + this.moveY);
     }
     else {
       console.log("Incorrect Movement Key");
