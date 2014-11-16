@@ -73,9 +73,7 @@ Player.prototype.update = function() {
     //this.x = this.x + 5;
 
     // When they hit the water the game should be over
-    if (this.y < 0) {
-      this.y = 400;
-    }
+
 };
 
 Player.prototype.render = function() {
@@ -104,10 +102,10 @@ Player.prototype.handleInput = function(keys) {
     function validMoveY(move) {
       var newY = move;
       if (newY < 50) {
+        console.log("You Win");
         return 400;
       }
       else if (newY > 450) {
-        console.log("You Win");
         return 400;
       }
       else {
@@ -115,18 +113,14 @@ Player.prototype.handleInput = function(keys) {
       }
     }
 
-    //Valid X move
+    //Valid X or Y moves
     if (keys == "left") {
       this.x = validMoveX(this.x - this.moveX);
     }
     else if (keys == "right") {
       this.x = validMoveX(this.x + this.moveX);
-      console.log(this.x);
     }
-
-
-    //Valid Y move
-    if (keys == "up") {
+    else if (keys == "up") {
       this.y = validMoveY(this.y - this.moveY);
     }
     else if (keys == "down") {
@@ -135,7 +129,6 @@ Player.prototype.handleInput = function(keys) {
     else {
       console.log("Incorrect Movement Key");
     }
-    console.log("After " + this.x + "  " + this.y);
 };
 
 // Now instantiate your objects.
@@ -144,7 +137,6 @@ Player.prototype.handleInput = function(keys) {
 var enemy01 = new Enemy();
 var enemy02 = new Enemy();
 var enemy03 = new Enemy();
-
 
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
