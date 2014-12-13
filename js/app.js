@@ -1,31 +1,26 @@
-//Make a super class?
-/*
-var Sprites = function() {
-    var this.sprite;
-    var this.x;
-    var this.y;
-};
-*/
-
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    console.log(this.width);
+    //this.height = Resources.get(this.sprite).height;
+    this.x = x
+    this.y = y
 
     // Randomly place bug on the three column lanes
     var ranNumLaneY = Math.floor(Math.random() * 4);
-    console.log(ranNumLaneY);
-    this.y = 55 + (80 * (ranNumLaneY - 1));
-
-    // Randomly start bug on the row
-    var ranNumLaneX = Math.floor(Math.random() * 201) + 100;
-    console.log(ranNumLaneX);
-    var negLaneStartX = Math.abs(ranNumLaneX) * -1;
-    this.x = negLaneStartX;
+    //console.log(ranNumLaneY);
+    // this.y = 70 + (80 * (ranNumLaneY - 1));
+    // console.log("Current y = " + this.y)
+    // // Randomly start bug on the row
+    // var ranNumLaneX = Math.floor(Math.random() * 201) + 100;
+    // //console.log(ranNumLaneX);
+    // var negLaneStartX = Math.abs(ranNumLaneX) * -1;
+    // this.x = negLaneStartX;
 
     // Add enemy speed
 
@@ -58,10 +53,17 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = 202;
-    this.y = 400;
+
     this.moveX = 101;
     this.moveY = 85;
+
+    this.startx = 202;
+    this.starty = 400;
+
+    this.x = this.startx;
+    this.y = this.starty;
+    //this.width = Resources.get(this.sprite).width;
+    //this.height = Resources.get(this.sprite).height;
 
 };
 
@@ -74,6 +76,23 @@ Player.prototype.update = function() {
 
     // When they hit the water the game should be over
 
+      var collision = false;
+
+      allEnemies.forEach(function(item) {
+        //console.log("X Enemy= " + item.x  + "player X= " + player.y);
+
+        if (item.y == player.y) {
+          //console.log("Y Enemy= " + item.y  + "player Y= " + player.y);
+          if (item.x == player.x) {
+            player.x = player.startx;
+            player.y = player.starty;
+            collision = true;
+            console.log("You Died");
+          }
+        }
+      });
+
+
 };
 
 Player.prototype.render = function() {
@@ -82,8 +101,7 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(keys) {
     //logic for each key type and render the movement
-    console.log(keys);
-    console.log("Before" + this.x + "  " + this.y);
+    //console.log(keys);
 
     // Check if player has left the board
     function validMoveX(move) {
@@ -113,30 +131,92 @@ Player.prototype.handleInput = function(keys) {
       }
     }
 
+    function validMove() {
+
+      var newX = this.x - this.moveX;
+      var newY = this.x - this.moveY;
+
+
+      return collision();
+    }
+
+    function collision() {
+      var collision = false;
+
+      allEnemies.forEach(function(item) {
+        //console.log("Y Enemy= " + item.y  + "player Y= " + player.y);
+
+        if (item.y == player.y) {
+          console.log("Y Enemy= " + item.y  + "player Y= " + player.y);
+          if (item.x == player.x) {
+            player.x = player.startx;
+            player.y = player.starty;
+            collision = true;
+            console.log("You Died");
+          }
+        }
+      });
+      // for (enemy in allEnemies) {
+      //   //console.log("Same test");
+      //   console.log("Y Enemy= " + enemy.y  + "player Y= " + player.y);
+      //
+      //   if (enemy.y == player.y) {
+      //     console.log("Y Enemy= " + enemy.y  + "player Y= " + player.y);
+      //     if (enemy.x == player.x) {
+      //       player.x = player.startx;
+      //       player.y = player.starty;
+      //       collision = true;
+      //       console.log("You Died");
+      //     }
+      //   }
+      // }
+      return collision;
+    }
+
     //Valid X or Y moves
-    if (keys == "left") {
-      this.x = validMoveX(this.x - this.moveX);
+    if (keys == "left" && !validMove()) {
+      this.x = this.x - this.moveX;
     }
-    else if (keys == "right") {
-      this.x = validMoveX(this.x + this.moveX);
+    else if (keys == "right" && !validMove()) {
+      this.x = this.x + this.moveX;
     }
-    else if (keys == "up") {
-      this.y = validMoveY(this.y - this.moveY);
+    else if (keys == "up" && !validMove()) {
+      this.y = this.y - this.moveY;
     }
-    else if (keys == "down") {
-      this.y = validMoveY(this.y + this.moveY);
+    else if (keys == "down" && !validMove()) {
+      this.y = this.y + this.moveY;
     }
     else {
-      console.log("Incorrect Movement Key");
+      console.log("No Move or Incorrect Key");
     }
+
+
+    // //Valid X or Y moves
+    // if (keys == "left") {
+    //   this.x = validMoveX(this.x - this.moveX);
+    // }
+    // else if (keys == "right") {
+    //   this.x = validMoveX(this.x + this.moveX);
+    // }
+    // else if (keys == "up") {
+    //   this.y = validMoveY(this.y - this.moveY);
+    // }
+    // else if (keys == "down") {
+    //   this.y = validMoveY(this.y + this.moveY);
+    // }
+    // else {
+    //   console.log("Incorrect Movement Key");
+    // }
+
+    console.log("After: X= " + this.x + ", Y= " + this.y);
 };
 
 // Now instantiate your objects.
 
 // Add two more enemies
-var enemy01 = new Enemy();
-var enemy02 = new Enemy();
-var enemy03 = new Enemy();
+var enemy01 = new Enemy(-10, 230);
+var enemy02 = new Enemy(-10, 145);
+var enemy03 = new Enemy(-10, 60);
 
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
