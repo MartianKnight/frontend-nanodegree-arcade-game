@@ -1,3 +1,8 @@
+//  X X X X
+//Y
+//Y   THE DRAW AREA
+//Y
+
 // Enemies our player must avoid
 var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
@@ -11,8 +16,12 @@ var Enemy = function(x, y) {
     this.x = x
     this.y = y
 
+    this.collisionBox = 70;
+    this.minX = 40;
+    this.maxX = 300;
+
     // Randomly place bug on the three column lanes
-    var ranNumLaneY = Math.floor(Math.random() * 4);
+    //var ranNumLaneY = Math.floor(Math.random() * 4);
     //console.log(ranNumLaneY);
     // this.y = 70 + (80 * (ranNumLaneY - 1));
     // console.log("Current y = " + this.y)
@@ -33,12 +42,16 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
+    // Add enemy speed
+
     // Change x to a random negative number -300 to -40
     if (this.x < 500) {
       this.x = (this.x + 2);
     }
     else {
-      this.x = -50;
+      var ranNum = Math.floor(Math.random() * (this.maxX - this.minX)) + this.minX;
+      var negLaneStartX = Math.abs(ranNum) * -1;
+      this.x = negLaneStartX;
     }
     //Render is done in Engine.js
 };
@@ -71,28 +84,17 @@ var Player = function() {
 //player.prototype.constructor = player;
 
 Player.prototype.update = function() {
-    //
-    //this.x = this.x + 5;
 
-    // When they hit the water the game should be over
+    allEnemies.forEach(function(enemy) {
 
-      var collision = false;
-
-      allEnemies.forEach(function(item) {
-        //console.log("X Enemy= " + item.x  + "player X= " + player.y);
-
-        if (item.y == player.y) {
-          //console.log("Y Enemy= " + item.y  + "player Y= " + player.y);
-          if (item.x == player.x) {
-            player.x = player.startx;
-            player.y = player.starty;
-            collision = true;
-            console.log("You Died");
-          }
+      if (enemy.y == player.y) {
+        if (enemy.x <= (player.x + enemy.collisionBox) && enemy.x >= (player.x - enemy.collisionBox) ) {
+          player.x = player.startx;
+          player.y = player.starty;
+          console.log("You Died");
         }
-      });
-
-
+      }
+    });
 };
 
 Player.prototype.render = function() {
@@ -103,7 +105,7 @@ Player.prototype.handleInput = function(keys) {
     //logic for each key type and render the movement
     //console.log(keys);
 
-    // Check if player has left the board
+    // TODO: Remove magic numbers
     function validMoveX(move) {
       var newX = move;
       if (newX < 50) {
@@ -117,6 +119,7 @@ Player.prototype.handleInput = function(keys) {
       }
     }
 
+    // TODO: Remove magic numbers
     function validMoveY(move) {
       var newY = move;
       if (newY < 50) {
@@ -131,82 +134,22 @@ Player.prototype.handleInput = function(keys) {
       }
     }
 
-    function validMove() {
-
-      var newX = this.x - this.moveX;
-      var newY = this.x - this.moveY;
-
-
-      return collision();
+    // Handle the inputs and check if they are valid moves
+    if (keys == "left") {
+      this.x = validMoveX(this.x - this.moveX);
     }
-
-    function collision() {
-      var collision = false;
-
-      allEnemies.forEach(function(item) {
-        //console.log("Y Enemy= " + item.y  + "player Y= " + player.y);
-
-        if (item.y == player.y) {
-          console.log("Y Enemy= " + item.y  + "player Y= " + player.y);
-          if (item.x == player.x) {
-            player.x = player.startx;
-            player.y = player.starty;
-            collision = true;
-            console.log("You Died");
-          }
-        }
-      });
-      // for (enemy in allEnemies) {
-      //   //console.log("Same test");
-      //   console.log("Y Enemy= " + enemy.y  + "player Y= " + player.y);
-      //
-      //   if (enemy.y == player.y) {
-      //     console.log("Y Enemy= " + enemy.y  + "player Y= " + player.y);
-      //     if (enemy.x == player.x) {
-      //       player.x = player.startx;
-      //       player.y = player.starty;
-      //       collision = true;
-      //       console.log("You Died");
-      //     }
-      //   }
-      // }
-      return collision;
+    else if (keys == "right") {
+      this.x = validMoveX(this.x + this.moveX);
     }
-
-    //Valid X or Y moves
-    if (keys == "left" && !validMove()) {
-      this.x = this.x - this.moveX;
+    else if (keys == "up") {
+      this.y = validMoveY(this.y - this.moveY);
     }
-    else if (keys == "right" && !validMove()) {
-      this.x = this.x + this.moveX;
-    }
-    else if (keys == "up" && !validMove()) {
-      this.y = this.y - this.moveY;
-    }
-    else if (keys == "down" && !validMove()) {
-      this.y = this.y + this.moveY;
+    else if (keys == "down") {
+      this.y = validMoveY(this.y + this.moveY);
     }
     else {
       console.log("No Move or Incorrect Key");
     }
-
-
-    // //Valid X or Y moves
-    // if (keys == "left") {
-    //   this.x = validMoveX(this.x - this.moveX);
-    // }
-    // else if (keys == "right") {
-    //   this.x = validMoveX(this.x + this.moveX);
-    // }
-    // else if (keys == "up") {
-    //   this.y = validMoveY(this.y - this.moveY);
-    // }
-    // else if (keys == "down") {
-    //   this.y = validMoveY(this.y + this.moveY);
-    // }
-    // else {
-    //   console.log("Incorrect Movement Key");
-    // }
 
     console.log("After: X= " + this.x + ", Y= " + this.y);
 };
