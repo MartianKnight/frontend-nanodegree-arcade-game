@@ -3,6 +3,32 @@
 //Y   THE DRAW AREA
 //Y
 
+// TODO: Add Score
+
+var Counters = function() {
+  this.score = 0;
+};
+
+// TODO: Splash screen
+// TODO: player select
+// TODO: Fix magic numbers
+// TODO: Death screen
+
+// TODO: Hearts/Lives function
+var Lives = function() {
+  this.sprite = 'images/Heart.png';
+  this.lives = 3;
+
+  function died() {
+    this.lives--;
+    console.log("You died in the function");
+  }
+
+};
+
+// TODO: increase difficulty over time
+
+
 // Enemies our player must avoid
 var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
@@ -13,8 +39,8 @@ var Enemy = function(x, y) {
     this.sprite = 'images/enemy-bug.png';
     console.log(this.width);
     //this.height = Resources.get(this.sprite).height;
-    this.x = x
-    this.y = y
+    this.x = x;
+    this.y = y;
 
     this.collisionBox = 70;
     this.minX = 40;
@@ -66,6 +92,13 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
     this.sprite = 'images/char-boy.png';
+    this.spriteHearts = 'images/Heart.png';
+
+    this.xHearts = 350;
+    this.yHearts = 400;
+
+    this.lives = 3;
+    this.score = 0;
 
     this.moveX = 101;
     this.moveY = 85;
@@ -75,6 +108,7 @@ var Player = function() {
 
     this.x = this.startx;
     this.y = this.starty;
+
     //this.width = Resources.get(this.sprite).width;
     //this.height = Resources.get(this.sprite).height;
 
@@ -91,7 +125,8 @@ Player.prototype.update = function() {
         if (enemy.x <= (player.x + enemy.collisionBox) && enemy.x >= (player.x - enemy.collisionBox) ) {
           player.x = player.startx;
           player.y = player.starty;
-          console.log("You Died");
+          player.lives--;
+          console.log("You Died: " + player.lives);
         }
       }
     });
@@ -99,6 +134,11 @@ Player.prototype.update = function() {
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    for (var i = 0; i < player.lives; i++) {
+      //console.log(player.lives);
+      ctx.drawImage(Resources.get(this.spriteHearts), this.xHearts + (20 * i), this.yHearts);
+    }
 };
 
 Player.prototype.handleInput = function(keys) {
@@ -123,7 +163,8 @@ Player.prototype.handleInput = function(keys) {
     function validMoveY(move) {
       var newY = move;
       if (newY < 50) {
-        console.log("You Win");
+        player.score++;
+        console.log("You Win : " + player.score);
         return 400;
       }
       else if (newY > 450) {
@@ -165,6 +206,8 @@ var enemy03 = new Enemy(-10, 60);
 // Place the player object in a variable called player
 var allEnemies = [enemy01, enemy02, enemy03];
 var player = new Player();
+
+var lives = new Lives();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
