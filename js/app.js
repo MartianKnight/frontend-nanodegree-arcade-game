@@ -3,28 +3,11 @@
 //Y   THE DRAW AREA
 //Y
 
-// TODO: Add Score
-
-var Counters = function() {
-  this.score = 0;
-};
-
 // TODO: Splash screen
 // TODO: player select
 // TODO: Fix magic numbers
 // TODO: Death screen
-
-// TODO: Hearts/Lives function
-var Lives = function() {
-  this.sprite = 'images/Heart.png';
-  this.lives = 3;
-
-  function died() {
-    this.lives--;
-    console.log("You died in the function");
-  }
-
-};
+// TODO: Display score
 
 // TODO: increase difficulty over time
 
@@ -206,8 +189,6 @@ var enemy03 = new Enemy(-10, 60);
 // Place the player object in a variable called player
 var allEnemies = [enemy01, enemy02, enemy03];
 var player = new Player();
-
-var lives = new Lives();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
