@@ -122,6 +122,12 @@ Player.prototype.render = function() {
       //console.log(player.lives);
       ctx.drawImage(Resources.get(this.spriteHearts), this.xHearts + (20 * i), this.yHearts);
     }
+
+    // Score Display
+    ctx.fillStyle = '#f00';
+    ctx.font = 'italic bold 30px sans-serif';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('Score: ' + player.score, 50, 100);
 };
 
 Player.prototype.handleInput = function(keys) {
@@ -177,6 +183,8 @@ Player.prototype.handleInput = function(keys) {
 
     console.log("After: X= " + this.x + ", Y= " + this.y);
 };
+
+
 
 // Now instantiate your objects.
 
