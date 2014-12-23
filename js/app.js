@@ -43,7 +43,6 @@ var Enemy = function(x, y) {
     // Add enemy speed
 
 };
-
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
@@ -55,7 +54,8 @@ Enemy.prototype.update = function(dt) {
 
     // Change x to a random negative number -300 to -40
     if (this.x < 500) {
-      this.x = (this.x + 2);
+      this.x = this.x + 200 * dt;
+      //this.x = (this.x + 2);
     }
     else {
       var ranNum = Math.floor(Math.random() * (this.maxX - this.minX)) + this.minX;
@@ -132,7 +132,7 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(keys) {
     //logic for each key type and render the movement
-    //console.log(keys);
+    //console.log(keys)
 
     // TODO: Remove magic numbers
     function validMoveX(move) {
@@ -184,18 +184,15 @@ Player.prototype.handleInput = function(keys) {
     console.log("After: X= " + this.x + ", Y= " + this.y);
 };
 
-
-
-// Now instantiate your objects.
-
-// Add two more enemies
-var enemy01 = new Enemy(-10, 230);
+// Building enemys to be put into the allEnemies array
+var enemy01 = new Enemy(-20, 230);
 var enemy02 = new Enemy(-10, 145);
 var enemy03 = new Enemy(-10, 60);
+var enemy04 = new Enemy(-260, 145);
 
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [enemy01, enemy02, enemy03];
+var allEnemies = [enemy01, enemy02, enemy03, enemy04];
 var player = new Player();
 
 // This listens for key presses and sends the keys to your
