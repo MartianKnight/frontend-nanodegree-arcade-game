@@ -4,13 +4,9 @@
 //Y
 
 // TODO: Splash screen
-// TODO: player select
 // TODO: Fix magic numbers
 // TODO: Death screen
-// TODO: Display score
-
 // TODO: increase difficulty over time
-
 
 // Enemies our player must avoid
 var Enemy = function(x, y) {
@@ -21,7 +17,6 @@ var Enemy = function(x, y) {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     console.log(this.width);
-    //this.height = Resources.get(this.sprite).height;
     this.x = x;
     this.y = y;
 
@@ -29,19 +24,7 @@ var Enemy = function(x, y) {
     this.minX = 40;
     this.maxX = 300;
 
-    // Randomly place bug on the three column lanes
-    //var ranNumLaneY = Math.floor(Math.random() * 4);
-    //console.log(ranNumLaneY);
-    // this.y = 70 + (80 * (ranNumLaneY - 1));
-    // console.log("Current y = " + this.y)
-    // // Randomly start bug on the row
-    // var ranNumLaneX = Math.floor(Math.random() * 201) + 100;
-    // //console.log(ranNumLaneX);
-    // var negLaneStartX = Math.abs(ranNumLaneX) * -1;
-    // this.x = negLaneStartX;
-
-    // Add enemy speed
-
+    // TODO: Add enemy speed
 };
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -50,12 +33,9 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
-    // Add enemy speed
 
-    // Change x to a random negative number -300 to -40
     if (this.x < 500) {
       this.x = this.x + 200 * dt;
-      //this.x = (this.x + 2);
     }
     else {
       var ranNum = Math.floor(Math.random() * (this.maxX - this.minX)) + this.minX;
@@ -70,7 +50,6 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
@@ -91,14 +70,7 @@ var Player = function() {
 
     this.x = this.startx;
     this.y = this.starty;
-
-    //this.width = Resources.get(this.sprite).width;
-    //this.height = Resources.get(this.sprite).height;
-
 };
-
-//player.prototype = Object.create(Enemy.prototype);
-//player.prototype.constructor = player;
 
 Player.prototype.update = function() {
 
@@ -119,7 +91,6 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
     for (var i = 0; i < player.lives; i++) {
-      //console.log(player.lives);
       ctx.drawImage(Resources.get(this.spriteHearts), this.xHearts + (20 * i), this.yHearts);
     }
 
@@ -127,12 +98,18 @@ Player.prototype.render = function() {
     ctx.fillStyle = '#f00';
     ctx.font = 'italic bold 30px sans-serif';
     ctx.textBaseline = 'bottom';
-    ctx.fillText('Score: ' + player.score, 50, 100);
+
+    if (player.lives < 0) {
+      ctx.fillText('GAME OVER', 50, 100);
+      ctx.fillText('Refresh for new game', 50, 200);
+    }
+    else {
+      ctx.fillText('Score: ' + player.score, 50, 100);
+    }
 };
 
 Player.prototype.handleInput = function(keys) {
     //logic for each key type and render the movement
-    //console.log(keys)
 
     // TODO: Remove magic numbers
     function validMoveX(move) {
@@ -178,10 +155,10 @@ Player.prototype.handleInput = function(keys) {
       this.y = validMoveY(this.y + this.moveY);
     }
     else {
-      console.log("No Move or Incorrect Key");
+      //console.log("No Move or Incorrect Key");
     }
 
-    console.log("After: X= " + this.x + ", Y= " + this.y);
+    //console.log("After: X= " + this.x + ", Y= " + this.y);
 };
 
 // Building enemys to be put into the allEnemies array
