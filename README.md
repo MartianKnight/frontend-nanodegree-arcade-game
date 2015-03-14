@@ -3,14 +3,8 @@ Frontend Nanodegree Arcade Game
 
   **What is it?**
   -----------
-
-  The Apache HTTP Server is a powerful and flexible HTTP/1.1 compliant
-  web server.  Originally designed as a replacement for the NCSA HTTP
-  Server, it has grown to be the most popular web server on the
-  Internet.  As a project of the Apache Software Foundation, the
-  developers aim to collaboratively develop and maintain a robust,
-  commercial-grade, standards-based server with freely available
-  source code.
+  
+  Classic frogger game with visual assets and a game loop engine from Udacity. The gameplay mechanics were built as part of a nanodegree program. This game mostly focused on building objects for the enemy and player while maintain the attributes about each one of them during the game.
 
   **Documentation**
   -------------
